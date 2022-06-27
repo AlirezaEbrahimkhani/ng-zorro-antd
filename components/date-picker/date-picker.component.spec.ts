@@ -5,7 +5,14 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { ApplicationRef, Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, inject, TestBed, tick } from '@angular/core/testing';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -1102,7 +1109,7 @@ describe('NzDatePickerComponent', () => {
     beforeEach(() => (fixtureInstance.useSuite = 4));
 
     it('should formControl init work', fakeAsync(() => {
-      fixtureInstance.control = new FormControl(new Date('2020-04-08'));
+      fixtureInstance.control = new UntypedFormControl(new Date('2020-04-08'));
       fixture.detectChanges();
       flush(); // Wait writeValue() tobe done
       fixture.detectChanges();
@@ -1110,7 +1117,7 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should disabled work', fakeAsync(() => {
-      fixtureInstance.control = new FormControl({ value: new Date('2020-04-24'), disabled: true });
+      fixtureInstance.control = new UntypedFormControl({ value: new Date('2020-04-24'), disabled: true });
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
@@ -1217,7 +1224,7 @@ describe('in form', () => {
   let testBed: ComponentBed<NzTestDatePickerInFormComponent>;
   let fixture: ComponentFixture<NzTestDatePickerInFormComponent>;
   let datePickerElement!: HTMLElement;
-  let formGroup: FormGroup;
+  let formGroup: UntypedFormGroup;
   beforeEach(() => {
     testBed = createComponentBed(NzTestDatePickerInFormComponent, {
       imports: [NzDatePickerModule, NzIconTestModule, NzFormModule, ReactiveFormsModule, FormsModule]
@@ -1361,7 +1368,7 @@ class NzTestDatePickerComponent {
   modelValue!: Date;
 
   // --- Suite 4
-  control!: FormControl;
+  control!: UntypedFormControl;
 
   // --- Suite 5
   firstValue!: Date;
@@ -1387,8 +1394,8 @@ class NzTestDatePickerStatusComponent {
   `
 })
 class NzTestDatePickerInFormComponent {
-  validateForm: FormGroup = this.fb.group({
+  validateForm: UntypedFormGroup = this.fb.group({
     demo: [null, [Validators.required]]
   });
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: UntypedFormBuilder) {}
 }
